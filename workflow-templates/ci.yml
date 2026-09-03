@@ -1,18 +1,22 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will download a prebuilt Ruby version, install dependencies and run tests with Rake
-# For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
+# Runs the shared Ruby CI workflow maintained in fog/.github.
+# See: .github/workflows/ci.yml in https://github.com/fog/.github
+#
+# Bump the version ref below to pick up matrix/action updates; Dependabot
+# keeps it current once this file lands in a repository.
 
-name: Ruby
+name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ $default-branch ]
   pull_request:
-    branches: [ master ]
+    branches: [ $default-branch ]
+  schedule:
+    - cron: '0 0 * * 1' # At 00:00 on Monday.
+
+permissions:
+  contents: read
 
 jobs:
   test:
-    fog/.github/.github/workflows/ruby.yml@v1.4.0
+    uses: fog/.github/.github/workflows/ci.yml@v1.6.0

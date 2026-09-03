@@ -1,10 +1,22 @@
+# Runs the shared stale workflow maintained in fog/.github.
+# See: .github/workflows/stale.yml in https://github.com/fog/.github
+#
+# Bump the version ref below to pick up action updates; Dependabot keeps it
+# current once this file lands in a repository.
+
 name: Mark stale issues and pull requests
 
 on:
   schedule:
   - cron: "30 1 * * *"
 
+# A called workflow can only narrow these, never widen them, so the write
+# scopes actions/stale needs have to be granted here in the caller.
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
 jobs:
   stale:
-    uses:
-      fog/.github/.github/workflows/stale.yml@v1.0.0
+    uses: fog/.github/.github/workflows/stale.yml@v1.6.0

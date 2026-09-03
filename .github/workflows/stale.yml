@@ -1,3 +1,6 @@
+# Third-party actions are pinned to a full commit SHA. The trailing comment
+# records the human-readable version; Dependabot updates both together.
+
 name: Mark stale issues and pull requests
 
 on:
@@ -9,14 +12,17 @@ permissions:
 jobs:
   stale:
 
+    # A called workflow can only narrow the caller's token, never widen it, so
+    # the calling workflow must grant these as well.
     permissions:
-      issues: write         # to commen/close stale issues
+      issues: write         # to comment/close stale issues
       pull-requests: write  # to comment/close stale PRs
 
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
-    - uses: actions/stale@v11
+    - uses: actions/stale@4391f3da665fdf50b6810c1a66712fb9ba21aa93 # v11.0.0
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         days-before-stale: 60
